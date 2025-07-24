@@ -1,0 +1,121 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overridden by the Spring profile you use
+# For example: application-dev.yml if you use the "dev" profile.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# https://docs.spring.io/spring-boot/reference/features/profiles.html
+# ===================================================================
+
+logging:
+  level:
+    root: debug
+    org.springframework.cloud.config: debug
+    org.springframework.vault: debug
+    org.eclipse.jgit.util: info
+    org.eclipse.jgit.transport: info
+    org.eclipse.jgit.internal.storage.file: info
+  charset:
+    console: UTF-8
+    file: UTF-8
+  # Custom properties to define logs file paths according to different profiles
+  file-path: mnt/logs
+
+spring:
+  cloud:
+    # Declare how to connect to the HashiCorp Vault Server external
+    vault:
+      uri: http://localhost:8200
+      authentication: TOKEN
+      token: root
+      kv:
+        # You will manage the key-value at /secret in the Vault UI
+        backend: secret
+        # Used to combine context + profile into Vault path to query secret.
+        # For example if: application name = config-client, profile = dev, profile-separator = '-'
+        # Then Spring will look for secret at the following paths (in order of priority):
+        # /secret/config-client-dev
+        # /secret/config-client
+        # /secret/application-dev
+        # /secret/application
+        profile-separator: '-'
+        # This is the default context name if spring.application.name is not provided
+        # For example, if the client app does not send a specific application name
+        # Vault will attempt to retrieve the configuration from folder: /secret/application/
+        default-context: application
+    config:
+      server:
+        # Specifies which configuration to retrieve from Vault to return to the client
+        # Only works if spring.cloud.vault config above has successfully connected
+        vault:
+          kv-version: 2 # Using key-value engines version 2
+          token: root
+          backend: secret
+          default-key: application
+          profile-separator: "-"
+          order: -10
+        native:
+          search-locations: file:./configs/{application}
+
+dct:
+  base:
+    features:
+      datasource: disabled
+      jpa-auditing: disabled
+      rest-template: disabled
+      resources: disabled
+      socket: disabled
+      i18n: enabled
+
+    i18n:
+      base-names:
+        - classpath:i18n/messages
+      encoding: UTF-8
+
+    interceptor:
+      excluded-patterns:
+        - /**.ico
+        - /error**
+        - /i18n/**
+      cors:
+        apply-for:
+          - /**
+        allowed-origin-patterns:
+          - "*"
+        allowed-headers:
+          - Content-Type
+          - Authorization
+          - Accept
+          - Origin
+          - X-CSRF-Token
+          - X-Requested-With
+          - Access-Control-Allow-Origin
+        allowed-methods:
+          - GET
+          - OPTIONS
+        allowed-credentials: true
+
+    security:
+      enabled-tls: false
+      password-encrypt-factor: 12
+      public-request-patterns:
+        - /health/**
+        - /**.ico
+        - /i18n/**
+        - /p/**
+        - /api/p/**
+        - /application/**
+        - /gateway/**
+
+      jwt:
+        enabled: true
+        base64-secret-key: ZGN0LWJhc2Utc2VjcmV0LWtleS10b2tlbi12YWxpZGl0eS04NjQwMDAwMG1zLWZvci1yZW1lbWJlci1tZS04NjQwMDAwMG1z
+        access-token:
+          validity: 300000
+        refresh-token:
+          validity: 3600000  # milliseconds
+          validity-for-remember: 604800000

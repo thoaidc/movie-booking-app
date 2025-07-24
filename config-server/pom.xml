@@ -14,14 +14,32 @@
     </parent>
 
     <properties>
-        <profiles.active>dev</profiles.active>
+        <profiles.active>dev,native,vault</profiles.active>
         <main-start-class>vn.ptit.configserver.ConfigServerApplication</main-start-class>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>com.dct</groupId>
+            <artifactId>starter-config</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- Spring Cloud Config Server -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-vault-config</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Starter Actuator -->
+        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <dependency>
@@ -35,14 +53,14 @@
         <profile>
             <id>dev</id>
             <properties>
-                <profiles.active>dev</profiles.active>
+                <profiles.active>dev,native,vault</profiles.active>
             </properties>
         </profile>
 
         <profile>
             <id>prod</id>
             <properties>
-                <profiles.active>prod</profiles.active>
+                <profiles.active>prod,git,vault</profiles.active>
             </properties>
         </profile>
     </profiles>

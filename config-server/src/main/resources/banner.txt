@@ -1,0 +1,8 @@
+${AnsiColor.BRIGHT_RED}   ____             __ _        ${AnsiColor.BRIGHT_GREEN}  ____
+${AnsiColor.BRIGHT_RED}  / ___|___  _ __  / _(_) __ _  ${AnsiColor.BRIGHT_GREEN} / ___|  ___ _ ____   _____ _ __
+${AnsiColor.BRIGHT_RED} | |   / _ \| '_ \| |_| |/ _` | ${AnsiColor.BRIGHT_GREEN} \___ \ / _ \ '__\ \ / / _ \ '__|
+${AnsiColor.BRIGHT_RED} | |__| (_) | | | |  _| | (_| | ${AnsiColor.BRIGHT_GREEN}  ___) |  __/ |   \ V /  __/ |
+${AnsiColor.BRIGHT_RED}  \____\___/|_| |_|_| |_|\__, | ${AnsiColor.BRIGHT_GREEN} |____/ \___|_|    \_/ \___|_|
+${AnsiColor.BRIGHT_RED}                         |___/  ${AnsiColor.BRIGHT_GREEN}
+
+${AnsiColor.BRIGHT_CYAN} 🤓 Running Spring Boot ${spring-boot.version}${AnsiColor.BRIGHT_WHITE}
