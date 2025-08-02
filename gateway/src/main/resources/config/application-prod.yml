@@ -1,0 +1,121 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overridden by the Spring profile you use
+# For example: application-dev.yml if you use the "dev" profile.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# https://docs.spring.io/spring-boot/reference/features/profiles.html
+# ===================================================================
+
+logging:
+  level:
+    root: info
+    com.ars.gateway: info
+  charset:
+    console: UTF-8
+    file: UTF-8
+  # Custom properties to define logs file paths according to different profiles
+  file-path: /mnt/logs
+
+spring:
+  # Redis Configuration for Rate Limiting
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ${ARS_REDIS_PASSWORD}
+      database: 0
+      timeout: 5s
+      connect-timeout: 10s
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 20
+          max-idle: 10
+          min-idle: 3
+          max-wait: 1s
+          time-between-eviction-runs: 30s
+        shutdown-timeout: 1000ms
+      ssl:
+        enabled: false
+
+  cloud:
+    gateway:
+      # Global CORS configuration
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+              - "http://localhost:8080"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - Content-Type
+              - Authorization
+              - Accept
+              - Origin
+              - X-CSRF-Token
+              - X-Requested-With
+              - Access-Control-Allow-Origin
+              - X-App-Version
+              - X-Device-ID
+            allowCredentials: true
+            maxAge: 3600  # Cache preflight response in 1 hour
+
+# Eureka client configuration
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+    healthcheck:
+      enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+    instanceId: ${spring.application.name}:${server.port}
+
+app:
+  gateway:
+    rate-limiter:
+      ip-validation-enabled: true
+      excluded-ips:
+        - "127.0.0.1"
+        - "::1"
+        - "host.docker.internal"
+      excluded-ip-prefixes: []
+    security:
+      request:
+        public-patterns:
+          - /*/api/p/**
+          - /*/api/v1/p/**
+    cache:
+      enabled: true
+      ttl-minutes: 5
+
+dct:
+  base:
+    security:
+      jwt:
+        enabled: true
+        base64-secret-key: ${ARS_GATEWAY_SECURITY_KEY}
+        access-token:
+          validity: 300000 # 5 minutes
+        refresh-token:
+          validity: 3600000 # 1 hour
+          validity-for-remember: 604800000 # 7 days
+    i18n:
+      base-names:
+        - classpath:i18n/messages
+      encoding: UTF-8
