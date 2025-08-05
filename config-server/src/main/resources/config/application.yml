@@ -16,12 +16,6 @@ server:
   shutdown: graceful
 
 spring:
-  autoconfigure:
-    exclude:
-      - org.springframework.cloud.vault.config.VaultAutoConfiguration
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-
   application:
     name: config-server
 

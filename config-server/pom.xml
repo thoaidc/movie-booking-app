@@ -14,14 +14,14 @@
     </parent>
 
     <properties>
-        <profiles.active>dev,native,vault</profiles.active>
+        <profiles.active>dev,native</profiles.active>
         <main-start-class>vn.ptit.configserver.ConfigServerApplication</main-start-class>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.dct</groupId>
-            <artifactId>starter-config</artifactId>
+            <artifactId>starter-model</artifactId>
             <version>1.0.0</version>
         </dependency>
 
@@ -29,11 +29,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-vault-config</artifactId>
         </dependency>
 
         <!-- Spring Boot Starter Actuator -->
@@ -53,14 +48,14 @@
         <profile>
             <id>dev</id>
             <properties>
-                <profiles.active>dev,native,vault</profiles.active>
+                <profiles.active>dev,native</profiles.active>
             </properties>
         </profile>
 
         <profile>
             <id>prod</id>
             <properties>
-                <profiles.active>prod,git,vault</profiles.active>
+                <profiles.active>prod,git</profiles.active>
             </properties>
         </profile>
     </profiles>
@@ -72,8 +67,8 @@
         <plugins>
             <!-- Build JAR -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
             <!-- Clean old target build -->
