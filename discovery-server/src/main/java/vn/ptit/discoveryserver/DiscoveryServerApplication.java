@@ -57,7 +57,7 @@ public class DiscoveryServerApplication {
                 \tExternal: \t{}://{}:{}{}
                 \tProfile(s): {}
                 \n----------------------------------------------------------
-                """,
+            """,
             applicationName,
             protocol,
             serverPort,
