@@ -14,7 +14,7 @@
 logging:
   level:
     root: debug
-    com.ars.gateway: debug
+    vn.ptit.gateway: debug
     io.netty: info
     io.lettuce.core.protocol: info
     io.github.resilience4j: info
@@ -23,7 +23,8 @@ logging:
     console: UTF-8
     file: UTF-8
   # Custom properties to define logs file paths according to different profiles
-  file-path: mnt/logs
+  file:
+    path: mnt/logs
 
 spring:
   # Redis Configuration for Rate Limiting

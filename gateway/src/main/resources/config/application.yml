@@ -19,7 +19,7 @@ server:
 
 spring:
   application:
-    name: api-gateway
+    name: gateway
   profiles:
     active: "@profiles.active@"
   lifecycle:
@@ -79,23 +79,36 @@ spring:
 
       # Route configurations
       routes:
-        - id: chat-service-websocket-route
-          uri: lb:ws://chat-service
-          predicates:
-            - Path=/ws/**
-          filters:
-            - StripPrefix=1
-
         - id: user-service-route
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user-service/**
+            - Path=/api/*/users/**
+            - Method=GET,POST,PUT,PATCH
+        - id: booking-service-route
+          uri: lb://BOOKING-SERVICE
+          predicates:
+            - Path=/api/*/bookings/**
             - Method=GET,POST,PUT,PATCH,DELETE
-          filters:
-            - StripPrefix=1
-            - name: RequestSize # The name of the filter built into Spring Gateway, cannot be changed
-              args:
-                maxSize: 5MB
+        - id: movie-service-route
+          uri: lb://MOVIE-SERVICE
+          predicates:
+            - Path=/api/*/movies/**
+            - Method=GET,POST,PUT,PATCH,DELETE
+        - id: notification-service-route
+          uri: lb://NOTIFICATION-SERVICE
+          predicates:
+            - Path=/api/*/notifications/**
+            - Method=GET,POST,PUT,PATCH,DELETE
+        - id: order-service-route
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/*/orders/**
+            - Method=GET,POST,PUT,PATCH,DELETE
+        - id: payment-service-route
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/*/payment/**
+            - Method=GET,POST
 
       # Load balancer configuration
       loadbalancer:

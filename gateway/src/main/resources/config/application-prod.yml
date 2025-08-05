@@ -14,12 +14,13 @@
 logging:
   level:
     root: info
-    com.ars.gateway: info
+    vn.ptit.gateway: info
   charset:
     console: UTF-8
     file: UTF-8
   # Custom properties to define logs file paths according to different profiles
-  file-path: /mnt/logs
+  file:
+    path: /mnt/logs
 
 spring:
   # Redis Configuration for Rate Limiting
@@ -27,8 +28,7 @@ spring:
     redis:
       host: localhost
       port: 6379
-      password: ${ARS_REDIS_PASSWORD}
-      database: 0
+      database: 1
       timeout: 5s
       connect-timeout: 10s
       lettuce:
@@ -109,7 +109,7 @@ dct:
     security:
       jwt:
         enabled: true
-        base64-secret-key: ${ARS_GATEWAY_SECURITY_KEY}
+        base64-secret-key: ${GATEWAY_SECURITY_KEY}
         access-token:
           validity: 300000 # 5 minutes
         refresh-token:

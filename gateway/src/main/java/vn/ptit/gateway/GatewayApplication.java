@@ -50,12 +50,12 @@ public class GatewayApplication {
         log.info(
             CRLFLogConverter.CRLF_SAFE_MARKER,
             """
-            \n----------------------------------------------------------
-            \tApplication '{}' is running! Access URLs:
-            \tLocal: \t\t{}://localhost:{}{}
-            \tExternal: \t{}://{}:{}{}
-            \tProfile(s): {}
-            \n----------------------------------------------------------
+                \n----------------------------------------------------------
+                \tApplication '{}' is running! Access URLs:
+                \tLocal: \t\t{}://localhost:{}{}
+                \tExternal: \t{}://{}:{}{}
+                \tProfile(s): {}
+                \n----------------------------------------------------------
             """,
             applicationName,
             protocol,
