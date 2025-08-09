@@ -1,0 +1,11 @@
+vn.ptit.config.autoconfig.AuditingAutoConfiguration
+vn.ptit.config.autoconfig.CircuitBreakerAutoConfiguration
+vn.ptit.config.autoconfig.DataSourceAutoConfiguration
+vn.ptit.config.autoconfig.GlobalExceptionHandlerAutoConfiguration
+vn.ptit.config.autoconfig.HttpClientAutoConfiguration
+vn.ptit.config.autoconfig.InterceptorAutoConfiguration
+vn.ptit.config.autoconfig.LocaleAutoConfiguration
+vn.ptit.config.autoconfig.ResourceHandlersAutoConfiguration
+vn.ptit.config.autoconfig.SecurityAutoConfiguration
+vn.ptit.config.autoconfig.SecurityFilterChainAutoConfiguration
+vn.ptit.config.autoconfig.TransactionManagementAutoConfiguration
