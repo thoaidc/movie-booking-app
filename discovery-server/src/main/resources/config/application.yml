@@ -11,7 +11,16 @@
 # https://docs.spring.io/spring-boot/reference/features/profiles.html
 # ===================================================================
 
-spring.config.import: optional:configserver:http://localhost:8888
+spring:
+  application:
+    name: discovery-server # Match the configuration on Config-server. No changes allowed
+  profiles:
+    active: "@profiles.active@"
+  cloud:
+    config:
+      uri: http://localhost:8888
+  lifecycle:
+    timeout-per-shutdown-phase: 5s
 
 server:
   servlet:
@@ -24,15 +33,6 @@ server:
         http-only: true
   port: 8761
   shutdown: graceful
-
-spring:
-  application:
-    name: service-discovery
-  profiles:
-    active: "@profiles.active@"
-  cloud:
-    config:
-      uri: http://localhost:8888
 
 # Actuator endpoints
 management:

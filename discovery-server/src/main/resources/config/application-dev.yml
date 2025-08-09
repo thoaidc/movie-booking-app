@@ -11,6 +11,8 @@
 # https://docs.spring.io/spring-boot/reference/features/profiles.html
 # ===================================================================
 
+spring.config.import: optional:configserver:http://localhost:8888
+
 logging:
   level:
     root: debug
@@ -21,7 +23,7 @@ logging:
     file: UTF-8
   # Custom properties to define logs file paths according to different profiles
   file:
-    path: mnt/logs
+    path: opt/logs/discovery-server
 
 # Eureka client configuration
 eureka:

@@ -1,6 +1,5 @@
 package vn.ptit.discoveryserver;
 
-import com.dct.model.config.CRLFLogConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +8,7 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
+import vn.ptit.model.config.CRLFLogConverter;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -22,7 +22,6 @@ public class DiscoveryServerApplication {
 
     /**
      * Main method, used to run the application
-     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -51,12 +50,12 @@ public class DiscoveryServerApplication {
         log.info(
             CRLFLogConverter.CRLF_SAFE_MARKER,
             """
-                \n----------------------------------------------------------
-                \tApplication '{}' is running! Access URLs:
-                \tLocal: \t\t{}://localhost:{}{}
-                \tExternal: \t{}://{}:{}{}
-                \tProfile(s): {}
-                \n----------------------------------------------------------
+            \n----------------------------------------------------------
+            \tApplication '{}' is running! Access URLs:
+            \tLocal: \t\t{}://localhost:{}{}
+            \tExternal: \t{}://{}:{}{}
+            \tProfile(s): {}
+            \n----------------------------------------------------------
             """,
             applicationName,
             protocol,
