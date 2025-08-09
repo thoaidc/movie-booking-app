@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration scan="true">
+    <!-- Include custom config from dct-starter-model FIRST -->
+    <include resource="logback/base.xml"/>
+
+    <root>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <!-- Override/add your own logger below if needed -->
+    <!-- Ex: <logger name="com.dct.custom" level="DEBUG"/> -->
+</configuration>

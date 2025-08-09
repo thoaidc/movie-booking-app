@@ -10,7 +10,7 @@ public interface BaseCommonConstants {
     String DEFAULT_CREATOR = "SYSTEM"; // Used instead of the default user value mentioned above to store in database
 
     // The location where the resource bundle files for i18n messages are stored
-    String[] DEFAULT_MESSAGE_SOURCE_BASENAME = { "classpath:i18n/messages" };
+    String[] DEFAULT_MESSAGE_SOURCE_BASENAME = { "classpath:i18n/messages", "classpath:i18n/base_messages" };
     String DEFAULT_MESSAGE_SOURCE_ENCODING = "UTF-8"; // Specifies the charset for i18n messages
 
     interface Images {

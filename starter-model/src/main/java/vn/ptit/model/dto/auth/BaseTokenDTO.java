@@ -14,7 +14,6 @@ public class BaseTokenDTO {
     private Authentication authentication; // Contains user authorities information
     private String username;
     private Integer userId;
-    private Integer botId;
     private Boolean isRememberMe = false;
 
     public static Builder builder() {
@@ -36,11 +35,6 @@ public class BaseTokenDTO {
 
         public Builder userId(Integer userId) {
             instance.userId = userId;
-            return this;
-        }
-
-        public Builder botId(Integer botId) {
-            instance.botId = botId;
             return this;
         }
 
@@ -90,13 +84,5 @@ public class BaseTokenDTO {
 
     public void setRememberMe(Boolean rememberMe) {
         isRememberMe = rememberMe;
-    }
-
-    public Integer getBotId() {
-        return botId;
-    }
-
-    public void setBotId(Integer botId) {
-        this.botId = botId;
     }
 }

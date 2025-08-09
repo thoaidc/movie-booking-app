@@ -18,7 +18,6 @@ public interface BaseSecurityConstants {
      * The corresponding keys to store information in the payload of a JWT token <p>
      */
     interface TOKEN_PAYLOAD {
-        String BOT_ID = "botId";
         String USER_ID = "userId";
         String USERNAME = "username";
         String AUTHORITIES = "authorities";
@@ -29,7 +28,6 @@ public interface BaseSecurityConstants {
         String AUTHORIZATION_HEADER = "Authorization";
         String AUTHORIZATION_GATEWAY_HEADER = "Authorization-Gateway";
         String TOKEN_TYPE = "Bearer "; // JWT token type
-        String BOT_ID = "X-Bot-ID";
         String USER_ID = "X-User-ID";
         String USER_NAME = "X-User-Name";
         String USER_AUTHORITIES = "X-User-Authorities";
