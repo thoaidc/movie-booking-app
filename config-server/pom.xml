@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>config-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>config-server</name>
 
     <parent>
@@ -20,7 +20,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.dct</groupId>
+            <groupId>vn.ptit</groupId>
             <artifactId>starter-model</artifactId>
             <version>1.0.0</version>
         </dependency>
@@ -41,6 +41,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.xmlunit</groupId>
+                    <artifactId>xmlunit-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.jayway.jsonpath</groupId>
+                    <artifactId>json-path</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

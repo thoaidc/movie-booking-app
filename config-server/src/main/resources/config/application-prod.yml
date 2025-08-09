@@ -12,15 +12,14 @@
 # ===================================================================
 
 logging:
+  file:
+    path: /opt/logs/config-server
   level:
     root: info
     vn.ptit.configserver: info
   charset:
     console: UTF-8
     file: UTF-8
-  # Custom properties to define logs file paths according to different profiles
-  file:
-    path: /mnt/logs
 
 spring:
   cloud:
@@ -29,7 +28,8 @@ spring:
         git:
           uri: https://github.com/thoaidc/movie-booking-app.git
           search-paths:
-            - configs/{application}
+            - file:./configs
+            - file:./configs/{application}
           default-label: main
           clone-on-start: true
           timeout: 10

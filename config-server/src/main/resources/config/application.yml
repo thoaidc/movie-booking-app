@@ -18,15 +18,16 @@ server:
 spring:
   application:
     name: config-server
-
   profiles:
     active: "@profiles.active@"
+  lifecycle:
+    timeout-per-shutdown-phase: 10s
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,refresh,vault
+        include: health,info,refresh
   endpoint:
     health:
       show-details: always

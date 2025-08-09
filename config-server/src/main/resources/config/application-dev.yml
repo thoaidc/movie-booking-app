@@ -12,6 +12,8 @@
 # ===================================================================
 
 logging:
+  file:
+    path: opt/logs/config-server
   level:
     root: debug
     org.springframework.cloud.config: debug
@@ -22,13 +24,12 @@ logging:
   charset:
     console: UTF-8
     file: UTF-8
-  # Custom properties to define logs file paths according to different profiles
-  file:
-    path: mnt/logs
 
 spring:
   cloud:
     config:
       server:
         native:
-          search-locations: file:./configs/{application}
+          search-locations:
+            - file:./configs
+            - file:./configs/{application}
