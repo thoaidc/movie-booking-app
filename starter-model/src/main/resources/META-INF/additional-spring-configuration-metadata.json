@@ -1,0 +1,24 @@
+{
+  "properties": [
+    {
+      "name": "app.features.datasource",
+      "type": "vn.ptit.model.constants.ActivateStatus",
+      "description": "Description for app.features.datasource."
+    },
+    {
+      "name": "app.features.jpa-auditing",
+      "type": "vn.ptit.model.constants.ActivateStatus",
+      "description": "Description for app.features.jpa-auditing."
+    },
+    {
+      "name": "app.features.rest-template",
+      "type": "vn.ptit.model.constants.ActivateStatus",
+      "description": "Description for app.features.rest-template."
+    },
+    {
+      "name": "app.features.resources",
+      "type": "vn.ptit.model.constants.ActivateStatus",
+      "description": "Description for app.features.resources."
+    }
+  ]
+}
