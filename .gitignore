@@ -210,4 +210,6 @@ Desktop.ini
 /.env
 /.nx/
 dist/
-/mnt/logs/
+/mnt/
+/opt/
+/.idea/
