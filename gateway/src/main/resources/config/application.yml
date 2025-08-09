@@ -1,0 +1,128 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overridden by the Spring profile you use
+# For example: application-dev.yml if you use the "dev" profile.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# https://docs.spring.io/spring-boot/reference/features/profiles.html
+# ===================================================================
+
+spring:
+  application:
+    name: gateway # Match the configuration on Config-server. No changes allowed
+  profiles:
+    active: "@profiles.active@"
+  lifecycle:
+    timeout-per-shutdown-phase: 10s
+
+  webflux:
+    multipart:
+      max-in-memory-size: 5MB
+      max-disk-usage-per-part: 20MB
+      max-parts: 64
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+    gateway:
+      # Global request filters
+      default-filters:
+        - name: AddRequestHeader
+          args:
+            name: X-API-Version
+            value: v1
+        - name: AddResponseHeader
+          args:
+            name: Cache-Control
+            value: public, max-age=300
+        - name: RequestRateLimiter # The name of the filter built into Spring Gateway, cannot be changed
+          args:
+            redis-rate-limiter.replenishRate: 5
+            redis-rate-limiter.burstCapacity: 10
+            redis-rate-limiter.requestedTokens: 1
+            key-resolver: "#{@compositeKeyResolver}"
+            deny-empty-key: false
+            empty-key-status: TOO_MANY_REQUESTS
+        - name: CircuitBreaker # The name of the filter built into Spring Gateway, cannot be changed
+          args:
+            name: service-cb
+            fallbackUri: forward:/fallback/services/unavailable
+        - name: Retry # The name of the filter built into Spring Gateway, cannot be changed
+          args:
+            retries: 5
+            statuses:
+              - BAD_GATEWAY
+              - SERVICE_UNAVAILABLE
+            methods:
+              - GET
+            backoff:
+              firstBackoff: 100ms
+              maxBackoff: 1000ms
+              factor: 2
+              basedOnPreviousValue: false
+
+      # Route configurations
+      routes:
+        - id: user-service-route
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/users/**, /api/p/users/**
+            - Method=GET,POST,PUT,PATCH,DELETE
+
+      # Load balancer configuration
+      loadbalancer:
+        use404: true
+
+      # Metrics configuration
+      metrics:
+        enabled: true
+        tags:
+          path:
+            enabled: true
+          application: ${spring.application.name}
+          environment: ${spring.profiles.active}
+      observability:
+        enabled: true
+
+server:
+  port: 8080
+  shutdown: graceful
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      service-cb:
+        slidingWindowType: COUNT_BASED
+        slowCallDurationThreshold: 2s # If request call > 2s → considered slow
+        slowCallRateThreshold: 75     # If ≥75% of calls are delayed → open circuit
+        registerHealthIndicator: true # Allows exposing circuit breaker status via actuator /actuator/health
+        slidingWindowSize: 5     # Use a sliding window of size 5 most recent calls to calculate the error
+        minimumNumberOfCalls: 3   # Only start evaluating errors after at least 3 requests
+        # When circuit breaker opens → after timeout → switches to half-open state, allowing 3 retry requests for testing
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 10s   # When circuit is open, wait 10s before allowing retry
+        # After waitDurationInOpenState, automatically switch from open to half-open (no new request required)
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        failureRateThreshold: 50      # If error rate > 50% in slidingWindowSize → open circuit (disconnect)
+        eventConsumerBufferSize: 10   # Circuit breaker status event log buffer (for monitoring, logging)
+
+# Actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+          - gateway
+          - circuitbreakers
+          - redis
+          - refresh
+  endpoint:
+    health:
+      show-details: always
