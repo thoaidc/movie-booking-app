@@ -1,0 +1,82 @@
+<ngx-loading-bar height="4px" color="#0376B9"></ngx-loading-bar>
+
+<div id="app" class="app app-sidebar-fixed app-header-fixed app-with-two-sidebar app-with-wide-sidebar app-with-light-sidebar">
+
+  <div class="app-content p-4 container">
+    <div class="title-feature form-space-between mb-4">
+      <span>Danh sách phim đang chiếu</span>
+    </div>
+
+    <div class="field-search">
+      <div class="search-criteria">
+        <app-date-filter
+          [class]="'col-3'"
+          (timeChange)="onTimeChange($event)"
+          [periods]="periods"
+          [clearable]="false"
+        >
+        </app-date-filter>
+
+        <div class="item-search">
+          <span>Từ khoá</span>
+          <div class="input-text-custom">
+            <input
+              class="form-control"
+              [(ngModel)]="moviesFilter.keyword"
+              type="search"
+              (keyup.enter)="onSearch()"
+              placeholder="Tên phim, tác giả,..."
+              autocomplete="off"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-btn-search">
+        <button class="cancel-button-dialog" (click)="onReload()" [disabled]="isLoading">
+          <span [innerHTML]="ICON_RELOAD | safeHtml"></span>Đặt lại
+        </button>
+        <button class="save-button-dialog ms-3" (click)="onSearch()" [disabled]="isLoading">
+          <span [innerHTML]="ICON_SEARCH | safeHtml"></span>Tìm kiếm
+        </button>
+      </div>
+    </div>
+
+    <div class="firms-contents my-5">
+      <div class="d-flex flex-wrap gap-3">
+        <ng-container *ngFor="let movie of movies">
+          <div class="card firm" (click)="openBookingModal(movie)">
+            <img src="./assets/images/movie.jpg" class="card-img-top" alt="poster"/>
+            <div class="card-body p-2">
+              <h6 class="card-title mb-1 text-truncate">{{ movie.name }}</h6>
+              <p class="card-text mb-0 text-muted small">{{ movie.duration }} phút</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="from-pagination">
+      <div class="total">
+        <span class="label-total">Tổng: {{ totalItems | number }}</span>
+        <ng-select
+          [items]="PAGINATION_PAGE_SIZE"
+          [(ngModel)]="moviesFilter.size"
+          (ngModelChange)="onSearch()"
+        >
+        </ng-select>
+      </div>
+      <ngb-pagination
+        class="pagination"
+        [collectionSize]="totalItems"
+        [pageSize]="moviesFilter.size"
+        [page]="moviesFilter.page"
+        [directionLinks]="true"
+        [maxSize]="5"
+        (pageChange)="loadMore($event)"
+      ></ngb-pagination>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>

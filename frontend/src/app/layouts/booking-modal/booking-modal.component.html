@@ -1,0 +1,71 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLongTitle">Đặt vé</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <h3>{{ movie.name }}</h3>
+  <p class="mb-1"><span class="text-dark fw-medium fs-6">Tác giả: </span>{{ movie.director }}</p>
+  <p class="mb-1"><span class="text-dark fw-medium fs-6">Thể loại: </span>{{ movie.genre }}</p>
+  <p class="mb-1"><span class="text-dark fw-medium fs-6">Thời lượng: </span>{{ movie.duration }} phút</p>
+  <p class="mb-1"><span class="text-dark fw-medium fs-6">Mô tả: </span>{{ movie.description }}</p>
+
+  <div class="my-4 d-flex justify-content-between align-items-start">
+    <div style="width: 220px">
+      <h5 class="fw-medium fs-5 mb-2">Suất chiếu</h5>
+
+      <ng-select
+        style="padding-top: 10px"
+        [items]="movieShows"
+        bindLabel="startTime"
+        bindValue="id"
+        [(ngModel)]="selectedShowId"
+        [clearable]="false"
+        (change)="changeShows()"
+        [disabled]="step === 'COMPLETED'"
+      >
+      </ng-select>
+
+      <div class="show-info mt-4" *ngIf="selectedShowInfo">
+        <p class="mb-0"><span class="fw-medium fs-6">Phòng:</span> {{ selectedShowInfo.room }}</p>
+        <p class="mb-0"><span class="fw-medium fs-6">Bắt đầu:</span> {{ selectedShowInfo.startTime }}</p>
+        <p class="mb-0"><span class="fw-medium fs-6">Kết thúc:</span> {{ selectedShowInfo.endTime }}</p>
+        <p class="mb-0"><span class="fw-medium fs-6">Giá vé (1 ghế):</span> {{ selectedShowInfo.ticketPrice }}đ</p>
+      </div>
+    </div>
+
+    <div class="seat-map">
+      <h5 class="fw-medium fs-5 mb-2">Chọn ghế ngồi</h5>
+
+      <ng-container *ngIf="seatsShow && seatsShow.length > 0">
+        <div *ngFor="let row of rows" class="seat-row">
+          <div *ngFor="let seat of seatsByRow[row]" class="seat"
+               [ngClass]="[seat.status.toLowerCase(), isSelected(seat.id) ? 'selected' : '']"
+               (click)="toggleSeatSelection(seat)">
+            {{ seat.code }}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div style="width: 180px; height: 2px"></div>
+  </div>
+
+  <ng-container *ngIf="step !== 'INIT'">
+    <div class="booking-status">
+      <h5>Trạng thái đơn hàng</h5>
+
+      <div class="booking-flow">
+        <p class="mb-0" *ngFor="let status of bookingStatus">{{ status }}</p>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<div class="modal-footer py-3">
+  <div class="btn-row col-md-12 d-flex justify-content-end m-0">
+    <button type="button" class="btn-delete me-2 mb-1" (click)="dismiss()" *ngIf="step !== 'COMPLETED'">Huỷ</button>
+    <button type="button" class="save-button-dialog me-2 mb-1" (click)="createBooking()" *ngIf="step === 'INIT'">Đặt vé</button>
+    <button type="button" class="success-button-dialog me-2 mb-1" (click)="dismiss()" *ngIf="step === 'COMPLETED'">Đóng</button>
+  </div>
+</div>

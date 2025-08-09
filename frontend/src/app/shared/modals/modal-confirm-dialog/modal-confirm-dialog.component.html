@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLongTitle">Thông báo</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+<div class="modal-body">{{ title }}</div>
+<div class="modal-footer">
+  <div class="btn-row col-md-12 d-flex justify-content-end m-0">
+    <button type="button" class="cancel-button-dialog me-2 mb-1" (click)="dismiss()">
+      <span>Huỷ</span>
+    </button>
+    <button (click)="onConfirm()" class="mb-1" [ngClass]="classBtn">
+      <span>Xác nhận</span>
+    </button>
+  </div>
+</div>

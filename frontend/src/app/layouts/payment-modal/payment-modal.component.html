@@ -1,0 +1,52 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="paymentInfo">Thanh toán</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <div class="item-search w-100">
+    <label for="ATM">Số thẻ ATM</label>
+    <div class="input-text-custom">
+      <input
+        id="ATM"
+        class="form-control"
+        [(ngModel)]="paymentInfo.atm"
+        type="text"
+        placeholder="Số thẻ ATM"
+      />
+    </div>
+  </div>
+
+  <div class="item-search w-100">
+    <label for="atm-pin">Mã PIN <span class="text-danger">*</span></label>
+    <div class="input-text-custom">
+      <input
+        id="atm-pin"
+        class="form-control"
+        [(ngModel)]="paymentInfo.pin"
+        type="text"
+        placeholder="Mã PIN thẻ"
+      />
+    </div>
+  </div>
+
+  <div class="item-search w-100">
+    <label for="amount">Số tiền thanh toán <span class="text-danger">*</span></label>
+    <div class="input-text-custom">
+      <input
+        id="amount"
+        class="form-control"
+        [value]="paymentInfo.amount"
+        type="text"
+        placeholder="Số tiền thanh toán"
+        disabled
+      />
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer py-3">
+  <div class="btn-row col-md-12 d-flex justify-content-end m-0">
+    <button type="button" class="save-button-dialog me-2 mb-1" [disabled]="bookingId === 0" (click)="confirm()">Xác nhận</button>
+  </div>
+</div>

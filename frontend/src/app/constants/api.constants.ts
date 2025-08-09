@@ -1,0 +1,9 @@
+export const API_SEARCH_SHOWS = '';
+export const API_SEARCH_MOVIES = '';
+export const API_SEARCH_SEATS = '';
+export const API_SEARCH_SEATS_SHOW = '';
+export const API_CREATE_ORDER = '';
+export const API_PAYMENT = '';
+export const API_REGISTER = '';
+export const API_LOGOUT = '';
+export const API_LOGIN = '';

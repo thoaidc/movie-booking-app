@@ -1,0 +1,16 @@
+<div class="form-space-between">
+  <div class="item-search col-12">
+    <span>Thời gian</span>
+    <div class="select-search-custom">
+      <ng-select
+        [items]="LIST_TIME_SELECT"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="periods"
+        [clearable]="clearable"
+        (change)="changePeriods()"
+      >
+      </ng-select>
+    </div>
+  </div>
+</div>
